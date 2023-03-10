@@ -9,9 +9,14 @@
 
 import UIKit
 
+import UIKit
+
 class MealListVC: UITableViewController {
 
     var meals: [String] = []
+    var selectedMealID: String?
+    var destinationVC = RecipeVC.self
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +68,81 @@ class MealListVC: UITableViewController {
     struct Meal: Codable {
         let strMeal: String
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowRecipe" {
+            if let recipeVC = segue.destination as? RecipeVC {
+                recipeVC.idMeal = selectedMealID!
+            }
+        }
+    }
+
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let RecipeVC = storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC
+        selectedMealID = meals[indexPath.row]
+
+        let selectedMeal = meals[indexPath.row]
+        // Set the properties of dessertDetailVC here
+        RecipeVC.idMeal = selectedMeal
+        // ...
+        navigationController?.pushViewController(RecipeVC, animated: true)
+    }
+
 }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let mealID = Meal[indexPath.row]
+//        selectedMeal = meals.first {$0.strMeal == Meal}
+//    }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetails" {
+//            if let indexPath = tableView.indexPathForSelectedRow {
+//                let destinationVC = segue.destination as! DetailsViewController
+//                let meal = meals[indexPath.row]
+//                destinationVC.idMeal = idMeal
+//
+//            }
+//        }
+    
+
+
+    
+
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // Get the selected meal
+//        let mealName = strMeals[indexPath.row]
+//        selectedMeal = meals.first { $0.strMeal == mealName }
+//
+//        // Perform the segue to the destination view controller
+//        performSegue(withIdentifier: "showDetails", sender: self)
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "showDetails" {
+//            // Get the destination view controller
+//            let destinationVC = segue.destination as! DetailsViewController
+//
+//            // Set the selected meal in the destination view controller
+//            destinationVC.meal = selectedMeal
+//        }
+//    }
+
+
+    
+    
+    
+//    struct MealsResponse: Codable {
+//        let meals: [Meal]
+//        let idMeal: String
+//    }
+//
+//    struct Meal: Codable {
+//        let strMeal: String
+//        let idMeal: String
+//
+
 
 
 //class MealListVC: UITableViewController {
