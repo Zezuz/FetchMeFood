@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="9" y="67"/>
         </scene>
-        <!--Details View Controller-->
+        <!--RecipeVC-->
         <scene sceneID="ka8-jk-pya">
             <objects>
-                <viewController storyboardIdentifier="RecipeVC" id="y45-gD-gng" customClass="DetailsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecipeVC" id="y45-gD-gng" customClass="RecipeVC" customModule="FetchMeFood" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8hy-dl-uis">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
