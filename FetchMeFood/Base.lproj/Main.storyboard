@@ -48,18 +48,19 @@
                     <connections>
                         <outlet property="tableView" destination="9qO-hz-HeE" id="vGr-Qv-EDo"/>
                         <outlet property="view" destination="9qO-hz-HeE" id="hKq-Zk-UOG"/>
+                        <segue destination="y45-gD-gng" kind="show" identifier="ShowRecipe" id="cN3-8F-byk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9" y="67"/>
+            <point key="canvasLocation" x="-48" y="76"/>
         </scene>
         <!--RecipeVC-->
         <scene sceneID="ka8-jk-pya">
             <objects>
                 <viewController storyboardIdentifier="RecipeVC" id="y45-gD-gng" customClass="RecipeVC" customModule="FetchMeFood" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8hy-dl-uis">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8T-w7-VhR">
@@ -87,6 +88,7 @@
                         <viewLayoutGuide key="safeArea" id="dPi-fO-3eV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="tFE-HL-coR"/>
                     <connections>
                         <outlet property="ingredientslabel" destination="T5D-Pl-pmf" id="9sG-Xc-URl"/>
                         <outlet property="instructionslabel" destination="7j8-HP-ntm" id="0PU-Nb-LmF"/>

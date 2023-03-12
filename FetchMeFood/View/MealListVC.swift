@@ -15,9 +15,10 @@ class MealListVC: UITableViewController {
     
     
 
-    var meals: [String] = []
-    var selectedMealID: String?
+    var meals: [Any] = []
+    var selectedMealID: String? = ""
     var destinationVC = RecipeVC.self
+    
 
     
     override func viewDidLoad() {
@@ -40,7 +41,8 @@ class MealListVC: UITableViewController {
             
             do {
                 let response = try JSONDecoder().decode(MealsResponse.self, from: data)
-                self.meals = response.meals.map { ($0.strMeal ?? "") }.sorted()
+                self.meals = response.meals
+                //self.meals = response.meals.map { ($0.strMeal ?? "") }.sorted()
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -58,8 +60,8 @@ class MealListVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let meal = meals[indexPath.row]
-        cell.textLabel?.text = meal
+        let meal = meals[indexPath.row] as? Meal
+        cell.textLabel?.text = meal?.strMeal
         return cell
     }
     
@@ -86,59 +88,106 @@ class MealListVC: UITableViewController {
             }
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let RecipeVC = storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC
-        selectedMealID = meals[indexPath.row]
-        //selectedMealID = MealsResponse.meals[0].idMeal
-
-        // Get the selected meal
+        let RecipeVC = storyboard?.instantiateViewController(identifier: "RecipeVC") as! RecipeVC
+        var tempMeal = meals[indexPath.row] as? Meal
+        selectedMealID = tempMeal?.idMeal
         
-        let selectedMealID = meals[indexPath.row]
-        //let selectedMealID = MealsResponse.meals[0].idMeal
-
-        // Fetch the details of the selected meal
-        let urlString = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=\(selectedMealID.idMeal)"
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL: \(urlString)")
-            return
-        }
-
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-
-            do {
-                let response = try JSONDecoder().decode(MealsResponse.self, from: data)
-                let meal = response.meals[0]
-                DispatchQueue.main.async {
-                    RecipeVC.mealNamelabel.text = meal.strMeal
-                    RecipeVC.instructionslabel.text = meal.strInstructions
-                    //RecipeVC.ingredientslabel.text = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
-                    // ...
-                    self.navigationController?.pushViewController(RecipeVC, animated: true)
-                }
-
+        
+        //selectedMealID = meals[indexPath.row]
+        
+        performSegue(withIdentifier: "ShowRecipe", sender: selectedMealID)
+    }
+        
+//        // Fetch the details of the selected meal
+//        let urlString = "https://www.themealdb.com/api/json/v1/1/search.php?s=\(selectedMealName)"
+//        guard let url = URL(string: urlString) else {
+//            print("Invalid URL: \(urlString)")
+//            return
+//        }
+//
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data = data, error == nil else {
+//                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
+//                return
+//            }
+//
+//            do {
 //                let response = try JSONDecoder().decode(MealsResponse.self, from: data)
 //                let meal = response.meals[0]
-//                let selectedMealID = response.meals[0].idMeal
+//                let selectedMealID = meal.idMeal
+//
 //                DispatchQueue.main.async {
-//                    // Set the properties of recipeVC
+//                    let RecipeVC = self.storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC
+//                    RecipeVC.idMeal = selectedMealID
+//                    RecipeVC.mealName = meal.strMeal
+//                    RecipeVC.instructions = meal.strInstructions
+//                    //RecipeVC.ingredients = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
+//
+//
+//                }
+//            } catch {
+//                print("Error decoding data: \(error.localizedDescription)")
+//            }
+//        }
+//
+//        task.resume()
+//    }
+
+
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let RecipeVC = storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC
+//        selectedMealID = meals[indexPath.row]
+//        //selectedMealID = MealsResponse.meals[0].idMeal
+//
+//        // Get the selected meal
+//
+//        let selectedMealID = meals[indexPath.row]
+//        //let selectedMealID = MealsResponse.meals[0].idMeal
+//
+//        // Fetch the details of the selected meal
+//        let urlString = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=\(selectedMealID)"
+//        guard let url = URL(string: urlString) else {
+//            print("Invalid URL: \(urlString)")
+//            return
+//        }
+//
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data = data, error == nil else {
+//                print("Error fetching data: \(error?.localizedDescription ?? "Unknown error")")
+//                return
+//            }
+//
+//            do {
+//                let response = try JSONDecoder().decode(MealsResponse.self, from: data)
+//                let meal = response.meals[0]
+//                DispatchQueue.main.async {
 //                    RecipeVC.mealNamelabel.text = meal.strMeal
 //                    RecipeVC.instructionslabel.text = meal.strInstructions
 //                    //RecipeVC.ingredientslabel.text = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
 //                    // ...
 //                    self.navigationController?.pushViewController(RecipeVC, animated: true)
-                
-            } catch {
-                print("Error decoding data: \(error.localizedDescription)")
-            }
-        }
-
-        task.resume()
-    }
+//                }
+//
+////                let response = try JSONDecoder().decode(MealsResponse.self, from: data)
+////                let meal = response.meals[0]
+////                let selectedMealID = response.meals[0].idMeal
+////                DispatchQueue.main.async {
+////                    // Set the properties of recipeVC
+////                    RecipeVC.mealNamelabel.text = meal.strMeal
+////                    RecipeVC.instructionslabel.text = meal.strInstructions
+////                    //RecipeVC.ingredientslabel.text = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
+////                    // ...
+////                    self.navigationController?.pushViewController(RecipeVC, animated: true)
+//
+//            } catch {
+//                print("Error decoding data: \(error.localizedDescription)")
+//            }
+//        }
+//
+//        task.resume()
+//    }
 
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        let RecipeVC = storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC

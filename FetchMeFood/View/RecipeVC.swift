@@ -24,57 +24,37 @@ class RecipeVC: UIViewController{
         
      override func viewDidLoad() {
             
-            if let idMeal = idMeal {
-                    let urlString = "https://themealdb.com/api/json/v1/1/lookup.php?i=\(idMeal)"
-                    let url = URL(string: urlString)!
-                    let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                        if let data = data,
-                            let mealResponse = try? JSONDecoder().decode(MealsResponse.self, from: data),
-                            let meal = mealResponse.meals.first {
-                            DispatchQueue.main.async {
-                                // Update UI with meal details
-                                self.mealNamelabel.text = self.mealName
-                                self.ingredientslabel.text = self.ingredients?.joined(separator: "\n")
-                                self.instructionslabel.text = self.instructions
-                            }
+        if let idMeal = idMeal {
+            let urlString = "https://themealdb.com/api/json/v1/1/lookup.php?i=\(idMeal)"
+            if let url = URL(string: urlString)  {
+                let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                    if let data = data,
+                       let mealResponse = try? JSONDecoder().decode(MealsResponse.self, from: data),
+                       let meal = mealResponse.meals.first {
+                        DispatchQueue.main.async {
+                            // Update UI with meal details
+                            self.mealNamelabel.text = "self.mealName"
+                            self.ingredientslabel.text = "self.ingredients?.joined(sepa)"
+                            self.instructionslabel.text = "self.instructions"
                         }
-            
-            
-            guard let url = URL(string: "https://themealdb.com/api/json/v1/1/lookup.php?i=\(idMeal)") else {
-                fatalError("Invalid URL")
-            }
-            
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print("Error fetching data: \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let data = data else {
-                    print("Error: No data received")
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let response = try decoder.decode(MealsResponse.self, from: data)
-                    guard let meal = response.meals.first else {
-                        print("Error: No meal data received")
-                        return
                     }
-                    
-                    DispatchQueue.main.async {
-                        self.mealNamelabel.text = meal.strMeal
-                        self.ingredientslabel.text = meal.strIngredient1
-                        self.instructionslabel.text = meal.strInstructions
-                    }
-                    
-                } catch {
-                    print("Error decoding data: \(error.localizedDescription)")
                 }
-            }
+                    
+//                    let task = URLSession.shared.dataTask(with: url!) { data, response, error in
+//                        if let data = data,
+//                            let mealResponse = try? JSONDecoder().decode(MealsResponse.self, from: data),
+//                            let meal = mealResponse.meals.first {
+//                            DispatchQueue.main.async {
+//                                // Update UI with meal details
+//                                self.mealNamelabel.text = self.mealName
+//                                self.ingredientslabel.text = self.ingredients?.joined(separator: "\n")
+//                                self.instructionslabel.text = self.instructions
+//                            }
+//                        }
+                       
             
-            task.resume()
+            
+//
         }
         
         func formatIngredients(_ meal: Meal) -> String {
