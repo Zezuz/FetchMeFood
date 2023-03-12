@@ -40,7 +40,7 @@ class MealListVC: UITableViewController {
             
             do {
                 let response = try JSONDecoder().decode(MealsResponse.self, from: data)
-                self.meals = response.meals.map { $0.strMeal }.sorted()
+                self.meals = response.meals.map { ($0.strMeal ?? "") }.sorted()
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -68,6 +68,7 @@ class MealListVC: UITableViewController {
     }
 
     struct Meal: Codable {
+        let idMeal: String?
         let strMeal: String?
         let strInstructions: String?
         let strIngredient1: String?
@@ -77,21 +78,27 @@ class MealListVC: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowRecipe" {
-            if let recipeVC = segue.destination as? RecipeVC {
-                recipeVC.idMeal = selectedMealID!
+            if let RecipeVC = segue.destination as? RecipeVC {
+                if let selectedMealID = sender as? String{
+                    RecipeVC.idMeal = selectedMealID
+                }
+                
             }
         }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let recipeVC = storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC
+        let RecipeVC = storyboard?.instantiateViewController(withIdentifier: "RecipeVC") as! RecipeVC
         selectedMealID = meals[indexPath.row]
+        //selectedMealID = MealsResponse.meals[0].idMeal
 
         // Get the selected meal
-        let selectedMeal = meals[indexPath.row]
+        
+        let selectedMealID = meals[indexPath.row]
+        //let selectedMealID = MealsResponse.meals[0].idMeal
 
         // Fetch the details of the selected meal
-        let urlString = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=\(selectedMealID!)"
+        let urlString = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=\(selectedMealID.idMeal)"
         guard let url = URL(string: urlString) else {
             print("Invalid URL: \(urlString)")
             return
@@ -107,13 +114,24 @@ class MealListVC: UITableViewController {
                 let response = try JSONDecoder().decode(MealsResponse.self, from: data)
                 let meal = response.meals[0]
                 DispatchQueue.main.async {
-                    // Set the properties of recipeVC
                     RecipeVC.mealNamelabel.text = meal.strMeal
                     RecipeVC.instructionslabel.text = meal.strInstructions
-                    RecipeVC.ingredientslabel.text = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
+                    //RecipeVC.ingredientslabel.text = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
                     // ...
-                    self.navigationController?.pushViewController(recipeVC, animated: true)
+                    self.navigationController?.pushViewController(RecipeVC, animated: true)
                 }
+
+//                let response = try JSONDecoder().decode(MealsResponse.self, from: data)
+//                let meal = response.meals[0]
+//                let selectedMealID = response.meals[0].idMeal
+//                DispatchQueue.main.async {
+//                    // Set the properties of recipeVC
+//                    RecipeVC.mealNamelabel.text = meal.strMeal
+//                    RecipeVC.instructionslabel.text = meal.strInstructions
+//                    //RecipeVC.ingredientslabel.text = [meal.strIngredient1, meal.strIngredient2, meal.strIngredient3]
+//                    // ...
+//                    self.navigationController?.pushViewController(RecipeVC, animated: true)
+                
             } catch {
                 print("Error decoding data: \(error.localizedDescription)")
             }
