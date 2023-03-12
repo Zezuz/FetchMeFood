@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Meal: Codable {
+public struct Meal: Codable {
     let idMeal: String
     let strMeal: String
     let strDrinkAlternate: String?
