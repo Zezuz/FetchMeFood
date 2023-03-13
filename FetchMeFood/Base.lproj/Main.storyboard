@@ -12,7 +12,7 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="MealListVC" id="BYZ-38-t0r" customClass="MealListVC" customModule="FetchMeFood" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UITableView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -30,10 +30,6 @@
                                         <accessibility key="accessibilityConfiguration" identifier="dessert"/>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="8bC-Xf-vdC" id="AwI-br-kUN"/>
-                                    <outlet property="delegate" destination="8bC-Xf-vdC" id="tVJ-15-kpZ"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -44,6 +40,10 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9qO-hz-HeE" secondAttribute="trailing" id="bFm-1S-ua9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9qO-hz-HeE" secondAttribute="bottom" id="s1g-a4-1sB"/>
                         </constraints>
+                        <connections>
+                            <outlet property="dataSource" destination="9qO-hz-HeE" id="w7v-v6-jjz"/>
+                            <outlet property="delegate" destination="9qO-hz-HeE" id="r3U-Nw-5c9"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="9qO-hz-HeE" id="vGr-Qv-EDo"/>
@@ -63,22 +63,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8T-w7-VhR">
-                                <rect key="frame" x="186" y="188" width="42" height="94"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4m-5W-uo6">
+                                <rect key="frame" x="186" y="158" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5D-Pl-pmf">
-                                <rect key="frame" x="186" y="332" width="42" height="77"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="9" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g24-ld-BEa">
+                                <rect key="frame" x="186" y="323" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7j8-HP-ntm">
-                                <rect key="frame" x="186" y="557" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q98-uT-qU7">
+                                <rect key="frame" x="187" y="565" width="41.5" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -90,9 +90,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="tFE-HL-coR"/>
                     <connections>
-                        <outlet property="ingredientslabel" destination="T5D-Pl-pmf" id="9sG-Xc-URl"/>
-                        <outlet property="instructionslabel" destination="7j8-HP-ntm" id="0PU-Nb-LmF"/>
-                        <outlet property="mealNamelabel" destination="S8T-w7-VhR" id="nMV-A0-ZYX"/>
+                        <outlet property="ingredientsLabel" destination="g24-ld-BEa" id="JyH-G6-12C"/>
+                        <outlet property="instructionsLabel" destination="Q98-uT-qU7" id="qiO-J1-W4E"/>
+                        <outlet property="mealNameLabel" destination="h4m-5W-uo6" id="ZDB-8v-PGh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPB-6W-MvZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
