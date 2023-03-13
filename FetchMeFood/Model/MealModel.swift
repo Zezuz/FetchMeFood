@@ -27,6 +27,17 @@ public struct Meal: Codable {
     let strIngredient7: String
     let strIngredient8: String
     let strIngredient9: String?
+    let strMeasure1: String
+    let strMeasure2: String
+    let strMeasure3: String
+    let strMeasure4: String
+    let strMeasure5: String
+    let strMeasure6: String
+    let strMeasure7: String
+    let strMeasure8: String
+    let strMeasure9: String
+    let strMeasure10: String
+    
 }
 
 
