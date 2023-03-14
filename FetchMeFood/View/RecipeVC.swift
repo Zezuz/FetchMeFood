@@ -17,7 +17,6 @@ class RecipeVC: UIViewController{
     var instructions: String?
     
     @IBOutlet weak var mealNameLabel: UILabel!
-    
     @IBOutlet weak var ingredientsLabel: UILabel!
     @IBOutlet weak var instructionsLabel: UILabel!
     @IBOutlet weak var measureLabel: UILabel!
